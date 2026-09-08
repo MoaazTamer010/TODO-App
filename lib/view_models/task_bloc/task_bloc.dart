@@ -2,7 +2,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'task_event.dart';
 import 'task_state.dart';
 import '../../repositories/task_repository.dart';
-import '../../models/task_model.dart';
 
 class TaskBloc extends Bloc<TaskEvent, TaskState> {
   final TaskRepository _repository;

@@ -116,7 +116,7 @@ class _FocusModeScreenState extends State<FocusModeScreen> {
               Navigator.pop(context);
               _resetTimer();
             },
-            child: Text(
+            child: const Text(
               'Continue',
               style: TextStyle(color: AppColors.primary),
             ),
@@ -182,7 +182,7 @@ class _FocusModeScreenState extends State<FocusModeScreen> {
                     Navigator.pop(context);
                   },
                 );
-              }).toList(),
+              }),
             const SizedBox(height: 20),
           ],
         ),
@@ -237,10 +237,10 @@ class _FocusModeScreenState extends State<FocusModeScreen> {
                     vertical: 12,
                   ),
                   decoration: BoxDecoration(
-                    color: AppColors.white.withOpacity(0.15),
+                    color: AppColors.white.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
-                      color: AppColors.white.withOpacity(0.2),
+                      color: AppColors.white.withValues(alpha: 0.2),
                     ),
                   ),
                   child: Row(
@@ -285,7 +285,7 @@ class _FocusModeScreenState extends State<FocusModeScreen> {
                       valueColor: const AlwaysStoppedAnimation<Color>(
                         AppColors.white,
                       ),
-                      backgroundColor: AppColors.white.withOpacity(0.2),
+                      backgroundColor: AppColors.white.withValues(alpha: 0.2),
                       strokeWidth: 8,
                     ),
                   ),
@@ -306,7 +306,7 @@ class _FocusModeScreenState extends State<FocusModeScreen> {
                       Text(
                         _isTimerRunning ? 'FOCUSING...' : 'READY',
                         style: TextStyle(
-                          color: AppColors.white.withOpacity(0.7),
+                          color: AppColors.white.withValues(alpha: 0.7),
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                           letterSpacing: 4,
@@ -375,13 +375,13 @@ class _FocusModeScreenState extends State<FocusModeScreen> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: AppColors.white.withOpacity(0.1),
+                  color: AppColors.white.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
                   '"Focus on being productive instead of busy."',
                   style: AppTypography.caption.copyWith(
-                    color: AppColors.white.withOpacity(0.8),
+                    color: AppColors.white.withValues(alpha: 0.8),
                     fontStyle: FontStyle.italic,
                   ),
                   textAlign: TextAlign.center,
@@ -423,8 +423,8 @@ class _FocusModeScreenState extends State<FocusModeScreen> {
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
               color: isSecondary
-                  ? AppColors.white.withOpacity(0.15)
-                  : AppColors.white.withOpacity(0.1),
+                  ? AppColors.white.withValues(alpha: 0.15)
+                  : AppColors.white.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
             child: Icon(
@@ -437,7 +437,7 @@ class _FocusModeScreenState extends State<FocusModeScreen> {
           Text(
             label,
             style: AppTypography.caption.copyWith(
-              color: AppColors.white.withOpacity(0.7),
+              color: AppColors.white.withValues(alpha: 0.7),
             ),
           ),
         ],
@@ -459,12 +459,12 @@ class _FocusModeScreenState extends State<FocusModeScreen> {
         decoration: BoxDecoration(
           color: isActive
               ? AppColors.white
-              : AppColors.white.withOpacity(0.1),
+              : AppColors.white.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: isActive
                 ? AppColors.white
-                : AppColors.white.withOpacity(0.2),
+                : AppColors.white.withValues(alpha: 0.2),
           ),
         ),
         child: Text(

@@ -70,7 +70,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.search_off,
                               size: 80,
                               color: AppColors.secondaryText,

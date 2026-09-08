@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../app_colors.dart';
 import '../../app_typography.dart';
-import '../../models/task_model.dart';
 import '../../view_models/task_bloc/task_bloc.dart';
 import '../../view_models/task_bloc/task_event.dart';
 import '../../view_models/task_bloc/task_state.dart';
@@ -58,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.error_outline, size: 60, color: AppColors.red),
+                  const Icon(Icons.error_outline, size: 60, color: AppColors.red),
                   const SizedBox(height: 16),
                   Text(
                     state.message,
@@ -79,8 +78,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
           if (state is TaskLoadedState) {
             final tasks = state.filteredTasks;
-            final pendingCount = state.pendingTasks.length;
-
             return Column(
               children: [
                 // Search/Add Task Bar
@@ -152,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     FilterTasksEvent(value),
                                   );
                                 },
-                                activeColor: AppColors.primary,
+                                activeThumbColor: AppColors.primary,
                               ),
                               const Text('Done', style: TextStyle(fontSize: 12)),
                             ],
@@ -172,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.check_circle_outline,
                                 size: 80,
                                 color: AppColors.secondaryText,

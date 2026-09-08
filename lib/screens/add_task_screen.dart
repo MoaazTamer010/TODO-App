@@ -80,7 +80,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               Text('Category', style: AppTypography.body),
               const SizedBox(height: 8),
               DropdownButtonFormField<String>(
-                value: _selectedCategory,
+                initialValue: _selectedCategory,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -107,7 +107,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               Text('Priority', style: AppTypography.body),
               const SizedBox(height: 8),
               DropdownButtonFormField<String>(
-                value: _selectedPriority,
+                initialValue: _selectedPriority,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
