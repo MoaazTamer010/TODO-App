@@ -1,5 +1,5 @@
-name: flutter_applications_1
-description: "A new Flutter project."
+name: flutter_application_1
+description: "UpTodo App - API Integration"
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -10,12 +10,16 @@ dependencies:
   flutter:
     sdk: flutter
   
-  # Add this line
-  google_fonts: ^6.1.0
+  # State Management
+  flutter_bloc: ^8.1.5
+  equatable: ^2.0.5
   
+  # API
+  dio: ^5.4.0
+  http: ^1.2.0
+  
+  # UI
   cupertino_icons: ^1.0.6
-  equatable: ^2.1.0
-  flutter_bloc: ^9.1.1
 
 dev_dependencies:
   flutter_test:

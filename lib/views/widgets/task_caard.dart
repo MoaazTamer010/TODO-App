@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../app_colors.dart';
-import '../../app_icons.dart';
 import '../../app_typography.dart';
-import '../../models/task_model.dart';
+import '../../models/task_model.dart'; 
 
 class TaskCard extends StatelessWidget {
   final Task task;
@@ -18,104 +17,36 @@ class TaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final priorityColor = _getPriorityColor(task.priority);
+    final isDone = task.isCompleted ?? false;
 
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       elevation: 0,
-      color: task.isDone ? AppColors.background : AppColors.card,
+      color: isDone ? AppColors.background : AppColors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
       child: ListTile(
         leading: Checkbox(
-          value: task.isDone,
-          onChanged: (_) => onToggle(),
+          value: isDone,
+          onChanged: (value) {
+            onToggle(); // <--- THIS IS THE CRITICAL LINE
+          },
           activeColor: AppColors.primary,
         ),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              task.title,
-              style: AppTypography.todo.copyWith(
-                color: task.isDone ? AppColors.secondaryText : AppColors.text,
-                decoration: task.isDone ? TextDecoration.lineThrough : null,
-              ),
-            ),
-            if (task.description != null) ...[
-              const SizedBox(height: 4),
-              Text(
-                task.description!,
-                style: AppTypography.caption,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
-            if (task.category != null) ...[
-              const SizedBox(height: 4),
-              Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 2,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.primary.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      task.category!,
-                      style: AppTypography.caption.copyWith(
-                        color: AppColors.primary,
-                      ),
-                    ),
-                  ),
-                  if (task.priority != null) ...[
-                    const SizedBox(width: 8),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 2,
-                      ),
-                      decoration: BoxDecoration(
-                        color: priorityColor.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        task.priority!,
-                        style: AppTypography.caption.copyWith(
-                          color: priorityColor,
-                        ),
-                      ),
-                    ),
-                  ],
-                ],
-              ),
-            ],
-          ],
+        title: Text(
+          task.title,
+          style: AppTypography.todo.copyWith(
+            decoration: isDone ? TextDecoration.lineThrough : null,
+            color: isDone ? AppColors.secondaryText : AppColors.text,
+          ),
         ),
         trailing: IconButton(
-          icon: const Icon(AppIcons.delete),
-          color: AppColors.delete,
+          icon: const Icon(Icons.delete_outline),
+          color: AppColors.red,
           onPressed: onDelete,
         ),
       ),
     );
-  }
-
-  Color _getPriorityColor(String? priority) {
-    if (priority == null) return AppColors.secondaryText;
-    switch (priority.toLowerCase()) {
-      case 'high':
-        return Colors.red;
-      case 'medium':
-        return Colors.orange;
-      case 'low':
-        return Colors.green;
-      default:
-        return AppColors.secondaryText;
-    }
   }
 }

@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     // Load tasks when screen initializes
-    context.read<TaskBloc>().add(LoadTasksEvent());
+    context.read<TaskBloc>().add(const LoadTasksEvent());
   }
 
   @override
@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {
-                      context.read<TaskBloc>().add(LoadTasksEvent());
+                      context.read<TaskBloc>().add(const LoadTasksEvent());
                     },
                     child: const Text('Retry'),
                   ),
@@ -200,13 +200,20 @@ class _HomeScreenState extends State<HomeScreen> {
                             return TaskCard(
                               task: task,
                               onToggle: () {
+                                final taskId = task.id;
+                                if (taskId == null) return;
                                 context.read<TaskBloc>().add(
-                                  ToggleTaskEvent(task.id),
+                                  ToggleTaskEvent(
+                                    taskId,
+                                    !(task.isCompleted ?? false),
+                                  ),
                                 );
                               },
                               onDelete: () {
+                                final taskId = task.id;
+                                if (taskId == null) return;
                                 context.read<TaskBloc>().add(
-                                  DeleteTaskEvent(task.id),
+                                  DeleteTaskEvent(taskId),
                                 );
                               },
                             );

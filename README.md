@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 📝 UpTodo App
 
 A modern task management application built with Flutter, featuring BLoC state management and MVVM architecture.
@@ -23,3 +24,6 @@ A modern task management application built with Flutter, featuring BLoC state ma
 - ✅ Task Completion Tracking
 
 ## 🏗️ Architecture
+=======
+# TODO-App
+>>>>>>> afabab3ca76c294ea1ae21b1c439589878389e64

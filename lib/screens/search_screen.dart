@@ -103,14 +103,20 @@ class _SearchScreenState extends State<SearchScreen> {
                         return TaskCard(
                           task: task,
                           onToggle: () {
-                            context.read<TaskBloc>().add(
-                              ToggleTaskEvent(task.id),
-                            );
+                            final taskId = task.id;
+                            if (taskId != null) {
+                              context.read<TaskBloc>().add(
+                                ToggleTaskEvent(taskId, !(task.isCompleted ?? false)),
+                              );
+                            }
                           },
                           onDelete: () {
-                            context.read<TaskBloc>().add(
-                              DeleteTaskEvent(task.id),
-                            );
+                            final taskId = task.id;
+                            if (taskId != null) {
+                              context.read<TaskBloc>().add(
+                                DeleteTaskEvent(taskId),
+                              );
+                            }
                           },
                         );
                       },

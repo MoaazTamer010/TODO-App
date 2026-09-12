@@ -8,59 +8,83 @@ abstract class TaskEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-// Load tasks event
-class LoadTasksEvent extends TaskEvent {}
+// ============ LOAD TASKS ============
+class LoadTasksEvent extends TaskEvent {
+  final bool refresh;
+  
+  const LoadTasksEvent({this.refresh = false});
 
-// Add task event
+  @override
+  List<Object?> get props => [refresh];
+}
+
+// ============ ADD TASK ============
 class AddTaskEvent extends TaskEvent {
   final Task task;
+  
   const AddTaskEvent(this.task);
 
   @override
   List<Object?> get props => [task];
 }
 
-// Toggle task event
+// ============ TOGGLE TASK ============
 class ToggleTaskEvent extends TaskEvent {
-  final String taskId;
-  const ToggleTaskEvent(this.taskId);
+  final int taskId;
+  final bool isCompleted;
+
+  const ToggleTaskEvent(this.taskId, this.isCompleted);
 
   @override
-  List<Object?> get props => [taskId];
+  List<Object?> get props => [taskId, isCompleted];
 }
 
-// Delete task event
+// ============ DELETE TASK ============
 class DeleteTaskEvent extends TaskEvent {
-  final String taskId;
+  final int taskId;
+  
   const DeleteTaskEvent(this.taskId);
 
   @override
   List<Object?> get props => [taskId];
 }
 
-// Update task event
+// ============ UPDATE TASK ============
 class UpdateTaskEvent extends TaskEvent {
   final Task task;
+  
   const UpdateTaskEvent(this.task);
 
   @override
   List<Object?> get props => [task];
 }
 
-// Search tasks event
+// ============ SEARCH TASKS ============
 class SearchTasksEvent extends TaskEvent {
   final String query;
+  
   const SearchTasksEvent(this.query);
 
   @override
   List<Object?> get props => [query];
 }
 
-// Filter tasks event
+// ============ CLEAR SEARCH ============
+class ClearSearchEvent extends TaskEvent {
+  const ClearSearchEvent();
+}
+
+// ============ FILTER TASKS ============
 class FilterTasksEvent extends TaskEvent {
   final bool showCompleted;
+  
   const FilterTasksEvent(this.showCompleted);
 
   @override
   List<Object?> get props => [showCompleted];
+}
+
+// ============ CLEAR ERROR ============
+class ClearErrorEvent extends TaskEvent {
+  const ClearErrorEvent();
 }

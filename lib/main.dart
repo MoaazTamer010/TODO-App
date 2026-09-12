@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     return BlocProvider(
       create: (context) => TaskBloc(
         repository: TaskRepository(),
-      )..add(LoadTasksEvent()),
+      )..add(const LoadTasksEvent()),
       child: MaterialApp(
         title: 'UpTodo',
         debugShowCheckedModeBanner: false,

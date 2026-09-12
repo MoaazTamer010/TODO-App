@@ -193,7 +193,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     category: _selectedCategory,
                     priority: _selectedPriority,
                     dueDate: _selectedDate,
-                  );
+                  ) as Task;
 
                   context.read<TaskBloc>().add(AddTaskEvent(task));
                   Navigator.pop(context, true);

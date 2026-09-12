@@ -1,107 +1,64 @@
 import '../models/task_model.dart';
+import 'task_api_service.dart';
 
 class TaskRepository {
-  // In-memory data store
-  static final List<Task> _tasks = [
-    Task(
-      id: '1',
-      title: 'UI/UX Design',
-      description: 'Complete the design for the UpTodo app',
-      isDone: false,
-      category: 'Work',
-      priority: 'High',
-      createdAt: DateTime.now().subtract(const Duration(days: 1)),
-    ),
-    Task(
-      id: '2',
-      title: 'Morning Workout',
-      description: '30 minutes cardio and stretching',
-      isDone: true,
-      category: 'Health',
-      priority: 'Medium',
-      createdAt: DateTime.now().subtract(const Duration(hours: 2)),
-    ),
-    Task(
-      id: '3',
-      title: 'Buy Groceries',
-      description: 'Milk, eggs, bread, and vegetables',
-      isDone: false,
-      category: 'Shopping',
-      priority: 'Low',
-      createdAt: DateTime.now().subtract(const Duration(hours: 5)),
-    ),
-    Task(
-      id: '4',
-      title: 'Team Meeting',
-      description: 'Weekly sync with the development team',
-      isDone: false,
-      category: 'Work',
-      priority: 'High',
-      createdAt: DateTime.now().subtract(const Duration(hours: 8)),
-    ),
-  ];
+  final TaskApiService _apiService;
 
-  // Get all tasks
-  List<Task> getTasks() {
-    return _tasks;
+  TaskRepository({TaskApiService? apiService})
+      : _apiService = apiService ?? TaskApiService();
+
+  // ============ GET TODOS ============
+  Future<TodosResponse> getTasks({
+    int page = 1,
+    int limit = 100, // Get more tasks at once
+    int? userId,
+    bool? completed,
+  }) async {
+    return _apiService.getTodos(
+      page: page,
+      limit: limit,
+      userId: userId,
+      completed: completed,
+    );
   }
 
-  // Get pending tasks
-  List<Task> getPendingTasks() {
-    return _tasks.where((task) => !task.isDone).toList();
+  // ============ GET ONE TASK ============
+  Future<Task> getTask(int id) async {
+    return _apiService.getTodo(id);
   }
 
-  // Get completed tasks
-  List<Task> getCompletedTasks() {
-    return _tasks.where((task) => task.isDone).toList();
-  }
-
-  // Get tasks by category
-  List<Task> getTasksByCategory(String category) {
-    return _tasks.where((task) => task.category == category).toList();
-  }
-
-  // Search tasks
-  List<Task> searchTasks(String query) {
-    if (query.isEmpty) return _tasks;
-    return _tasks.where((task) =>
-      task.title.toLowerCase().contains(query.toLowerCase()) ||
-      (task.description?.toLowerCase().contains(query.toLowerCase()) ?? false)
-    ).toList();
-  }
-
-  // Add a new task
-  void addTask(Task task) {
-    _tasks.insert(0, task);
-  }
-
-  // Toggle task completion
-  void toggleTask(String id) {
-    final index = _tasks.indexWhere((task) => task.id == id);
-    if (index != -1) {
-      _tasks[index] = _tasks[index].copyWith(isDone: !_tasks[index].isDone);
+  // ============ SEARCH TASKS ============
+  Future<List<Task>> searchTasks(String query) async {
+    if (query.trim().isEmpty) {
+      // Return all tasks if query is empty
+      final response = await _apiService.getTodos(limit: 100);
+      return response.data;
     }
+    
+    final response = await _apiService.searchTodos(query);
+    return response.results;
   }
 
-  // Delete a task
-  void deleteTask(String id) {
-    _tasks.removeWhere((task) => task.id == id);
+  // ============ CREATE TASK ============
+  Future<Task> createTask(Task task) async {
+    return _apiService.createTodo(task);
   }
 
-  // Update a task
-  void updateTask(Task task) {
-    final index = _tasks.indexWhere((t) => t.id == task.id);
-    if (index != -1) {
-      _tasks[index] = task;
+  // ============ UPDATE TASK ============
+  Future<Task> updateTask(Task task) async {
+    if (task.id == null) {
+      throw Exception('Cannot update task without ID');
     }
+    return _apiService.updateTodo(task.id!, task);
   }
 
-  // Get task statistics
-  Map<String, int> getStats() {
-    return {
-      'total': _tasks.length,
-      'completed': _tasks.where((task) => task.isDone).length,
-      'pending': _tasks.where((task) => !task.isDone).length,
-    };
+  // ============ TOGGLE TASK ============
+  Future<Task> toggleTask(int id, bool completed) async {
+    return _apiService.toggleCompleted(id, completed);
+  }
+
+  // ============ DELETE TASK ============
+  Future<void> deleteTask(int id) async {
+    return _apiService.deleteTodo(id);
   }
 }
